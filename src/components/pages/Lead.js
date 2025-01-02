@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import DataTable from "react-data-table-component";
 
 const Lead = () => {
   const [searchText, setSearchText] = useState("");
@@ -68,55 +67,7 @@ const Lead = () => {
     },
   ];
 
-  const columns = [
-    { name: "S.No", selector: (row) => row.sNo, sortable: true },
-    { name: "Guest", selector: (row) => row.guest, sortable: true },
-    { name: "Quotations", selector: (row) => row.quotations, sortable: true },
-    { name: "Order Date", selector: (row) => row.orderDate, sortable: true },
-    { name: "Check In", selector: (row) => row.checkIn, sortable: true },
-    { name: "Check Out", selector: (row) => row.checkOut, sortable: true },
-    { name: "Special Request", selector: (row) => row.specialRequest },
-    { name: "Room Type", selector: (row) => row.roomType, sortable: true },
-    { name: "Trip Status", selector: (row) => row.tripStatus, sortable: true },
-    { name: "Added By", selector: (row) => row.addedBy },
-  ];
-
-  // Custom styles for the DataTable
-  const customStyles = {
-    headCells: {
-      style: {
-        borderBottom: "2px solid black",
-        backgroundColor: "#f4f4f4",
-        fontWeight: "bold",
-        fontSize: "14px",
-        padding: "10px",
-      },
-    },
-    cells: {
-      style: {
-        borderBottom: "1px solid #ddd",
-        padding: "10px",
-      },
-    },
-    rows: {
-      style: {
-        minHeight: "50px", // override the row height
-        '&:nth-of-type(even)': {
-          backgroundColor: "#f9f9f9",
-        },
-        '&:hover': {
-          backgroundColor: "#f1f1f1",
-        },
-      },
-    },
-    pagination: {
-      style: {
-        borderTop: "1px solid #ddd",
-      },
-    },
-  };
-
-  // Filter the data based on the search text
+  // Filter data based on search text
   const filteredData = data.filter(
     (item) =>
       item.guest.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -136,62 +87,76 @@ const Lead = () => {
           marginBottom: "20px",
         }}
       >
-        {/* Entries Dropdown and Search Bar */}
+        {/* Search bar */}
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          {/* Entries Dropdown */}
-          <div>
-            <label htmlFor="entries">Show entries: </label>
-            <select
-              id="entries"
-              value={rowsPerPage}
-              onChange={(e) => setRowsPerPage(Number(e.target.value))}
-              style={{ padding: "5px", borderRadius: "5px" }}
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-            </select>
-          </div>
+          <label htmlFor="entries">Show entries: </label>
+          <select
+            id="entries"
+            value={rowsPerPage}
+            onChange={(e) => setRowsPerPage(Number(e.target.value))}
+            style={{ padding: "5px", borderRadius: "5px" }}
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={15}>15</option>
+          </select>
 
-          {/* Search Bar */}
-          <div>
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              style={{
-                padding: "5px",
-                fontSize: "16px",
-                width: "200px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            style={{
+              padding: "5px",
+              fontSize: "16px",
+              width: "200px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+            }}
+          />
         </div>
       </div>
 
-      {/* Data Table Container with Borders and Margins */}
-      <div
+      {/* Table */}
+      <table
         style={{
-          border: "1px solid #ccc",
-          borderRadius: "10px",
-          padding: "10px",
-          margin: "20px 0",
+          width: "100%",
+          borderCollapse: "collapse",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          border: "1px solid #ccc",
         }}
       >
-        <DataTable
-          columns={columns}
-          data={filteredData}
-          customStyles={customStyles}
-          pagination
-          paginationPerPage={rowsPerPage}
-          highlightOnHover
-          striped
-        />
-      </div>
+        <thead>
+          <tr style={{ backgroundColor: "#f4f4f4", borderBottom: "2px solid black" }}>
+            <th style={{ padding: "10px", border: "1px solid #ddd" }}>S.No</th>
+            <th style={{ padding: "10px", border: "1px solid #ddd" }}>Guest</th>
+            <th style={{ padding: "10px", border: "1px solid #ddd" }}>Quotations</th>
+            <th style={{ padding: "10px", border: "1px solid #ddd" }}>Order Date</th>
+            <th style={{ padding: "10px", border: "1px solid #ddd" }}>Check In</th>
+            <th style={{ padding: "10px", border: "1px solid #ddd" }}>Check Out</th>
+            <th style={{ padding: "10px", border: "1px solid #ddd" }}>Special Request</th>
+            <th style={{ padding: "10px", border: "1px solid #ddd" }}>Room Type</th>
+            <th style={{ padding: "10px", border: "1px solid #ddd" }}>Trip Status</th>
+            <th style={{ padding: "10px", border: "1px solid #ddd" }}>Added By</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredData.slice(0, rowsPerPage).map((row, index) => (
+            <tr key={index} style={{ borderBottom: "1px solid #ddd" }}>
+              <td style={{ padding: "10px", border: "1px solid #ddd" }}>{row.sNo}</td>
+              <td style={{ padding: "10px", border: "1px solid #ddd" }}>{row.guest}</td>
+              <td style={{ padding: "10px", border: "1px solid #ddd" }}>{row.quotations}</td>
+              <td style={{ padding: "10px", border: "1px solid #ddd" }}>{row.orderDate}</td>
+              <td style={{ padding: "10px", border: "1px solid #ddd" }}>{row.checkIn}</td>
+              <td style={{ padding: "10px", border: "1px solid #ddd" }}>{row.checkOut}</td>
+              <td style={{ padding: "10px", border: "1px solid #ddd" }}>{row.specialRequest}</td>
+              <td style={{ padding: "10px", border: "1px solid #ddd" }}>{row.roomType}</td>
+              <td style={{ padding: "10px", border: "1px solid #ddd" }}>{row.tripStatus}</td>
+              <td style={{ padding: "10px", border: "1px solid #ddd" }}>{row.addedBy}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
