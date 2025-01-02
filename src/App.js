@@ -1,3 +1,6 @@
+
+import './App.css';
+import Table from "./components/pages/Table" 
 import React from "react";
 import Lead from "./components/pages/Lead";
 import './App.css';
@@ -10,6 +13,7 @@ import Manager from './components/pages/Manager';
 function App() {
   return (
     <div className="App">
+      <Table />
       <Lead />
      <Employee/>
      <Manager/>
